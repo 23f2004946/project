@@ -1,0 +1,23 @@
+name: Hash Chain Verification
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Compute hash bfad1383
+        run: |
+          echo -n "${{ secrets.MY_SECRET }}github-verified" | sha256sum | cut -c1-10 > verify_hash.txt
+
+      - name: Upload artifact bfad1383
+        uses: actions/upload-artifact@v4
+        with:
+          name: verify-hash-bfad1383
+          path: verify_hash.txt
